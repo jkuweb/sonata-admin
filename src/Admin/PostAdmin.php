@@ -19,7 +19,7 @@ final class PostAdmin extends AbstractAdmin
             ->add('body', TextareaType::class)
             ->add('category', ModelType::class, [
                 'class' => Category::class,
-                'choice_label' => 'name'
+                'property' => 'name'
             ]);
     }
 
