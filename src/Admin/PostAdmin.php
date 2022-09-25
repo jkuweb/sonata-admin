@@ -15,16 +15,20 @@ final class PostAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->with('Contenido', ['class' => 'col-md-9'])
-                ->add('title', TextType::class)
-                ->add('body', TextareaType::class)
+            ->tab('Post')
+                ->with('Contenido', ['class' => 'col-md-9'])
+                    ->add('title', TextType::class)
+                    ->add('body', TextareaType::class)
+                ->end()
             ->end()
-            ->with('Meta data', ['class' => 'col-md-3'])    
-                ->add('category', ModelType::class, [
-                    'class' => Category::class,
-                    'property' => 'name'
-                ])
-            ->end()
+            ->tab('Publish Options')    
+                ->with('Meta data', ['class' => 'col-md-3'])    
+                    ->add('category', ModelType::class, [
+                        'class' => Category::class,
+                        'property' => 'name'
+                    ])
+                ->end()
+            ->end()    
             ;
     }
 
