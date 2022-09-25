@@ -23,6 +23,10 @@ class Post
     #[ORM\Column]
     private ?bool $draft = null;
 
+    #[ORM\ManyToOne(inversedBy: 'Posts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +64,18 @@ class Post
     public function setDraft(bool $draft): self
     {
         $this->draft = $draft;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
