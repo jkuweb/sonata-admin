@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Entity\Post;
 use App\Entity\Category;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -35,5 +36,12 @@ final class PostAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         // ... configure $list
+    }
+
+    public function toString($object): string
+    {
+        return $object instanceof Post
+            ? $object->getTitle()
+            : 'Post';
     }
 }
