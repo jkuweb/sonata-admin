@@ -35,7 +35,11 @@ final class PostAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $list): void
     {
-        // ... configure $list
+        $list
+            ->addIdentifier('title')
+            ->add('category.name')
+            ->add('draft')
+            ;
     }
 
     public function toString($object): string
