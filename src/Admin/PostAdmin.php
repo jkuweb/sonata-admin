@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -45,7 +46,24 @@ final class PostAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagrid): void
     {
-        $datagrid->add('title');
+        /*
+         add(4argumentos):
+            string $name,
+            ?string $type = null,
+            array $filterOptions = [],
+            array $fieldDescriptionOptions = []
+        */    
+
+        $datagrid
+            ->add('title')
+            ->add('category', null, [
+                'field_type' => EntityType::class,
+                'field_options' => [
+                    'class' => Category::class,
+                    'choice_label' => 'name'
+                ],
+            ])
+        ;    
     }
 
     public function toString($object): string
