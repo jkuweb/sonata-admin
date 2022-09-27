@@ -5,6 +5,7 @@ namespace App\Admin;
 use App\Entity\Post;
 use App\Entity\Category;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
@@ -64,6 +65,16 @@ final class PostAdmin extends AbstractAdmin
                 ],
             ])
         ;    
+    }
+    
+    protected function configureShowFields(ShowMapper $show): void
+    {
+        $show
+            ->add('id')
+            ->add('title')
+            ->add('body')
+            ->add('category.name')
+        ;
     }
 
     public function toString($object): string
