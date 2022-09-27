@@ -70,10 +70,18 @@ final class PostAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
-            ->add('id')
-            ->add('title')
-            ->add('body')
-            ->add('category.name')
+            ->tab('Post')
+                ->with('Content', ['class' => 'col-md-9'])
+                    ->add('id')
+                    ->add('title')
+                    ->add('body')
+                ->end()    
+                ->with('Meta data', ['class' => 'col-md-3'])
+                    ->add('category.name')
+                ->end()
+            ->end()
+            ->tab('Publish Options')
+            ->end()        
         ;
     }
 
