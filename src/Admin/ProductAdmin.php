@@ -30,7 +30,21 @@ class ProductAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $list): void
     {
-        $list->addIdentifier('name');
+        /* https://docs.sonata-project.org/projects/SonataAdminBundle/en/4.x/reference/field_types/ */
+        $list
+            ->addIdentifier('name', null, ['label' => 'Nombre'])
+            ->add('price', 'currency', [
+                    'currency' => 'EUR',
+                    'label' => 'Precio',
+                    'editable' => true
+                ])
+            ->add('description')    
+            ->add('createdAt', null, [
+                    'format' => 'd-m-Y H:i',
+                    'timezone' => 'Europe/Madrid',
+                    'label' => 'Fecha'
+                 ])
+        ;
     }
 
     protected function configureShowFields(ShowMapper $show): void
