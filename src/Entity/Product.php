@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ProductRepository;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProductRepository;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -18,13 +20,18 @@ class Product
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $decription = null;
+    private ?string $description = null;
 
     #[ORM\Column]
     private ?int $price = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $createdAt;
+
+    public function __construct() 
+    {
+       $this->createdAt = new DateTimeImmutable('now');     
+    }
 
     public function getId(): ?int
     {
@@ -43,14 +50,14 @@ class Product
         return $this;
     }
 
-    public function getDecription(): ?string
+    public function getDescription(): ?string
     {
-        return $this->decription;
+        return $this->description;
     }
 
-    public function setDecription(?string $decription): self
+    public function setDescription(?string $description): self
     {
-        $this->decription = $decription;
+        $this->description = $description;
 
         return $this;
     }
