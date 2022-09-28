@@ -11,7 +11,7 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-    admin.category:
+    app.admin.category:
         class: App\Admin\CategoryAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Category, manager_type: orm, label: Categorías }
