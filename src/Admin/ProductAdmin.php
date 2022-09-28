@@ -44,6 +44,14 @@ class ProductAdmin extends AbstractAdmin
                     'timezone' => 'Europe/Madrid',
                     'label' => 'Fecha'
                  ])
+            ->add(ListMapper::NAME_ACTIONS, null, [
+                    'actions' => [
+                        'show' => [],
+                        'edit' => [],
+                        'delete' => []
+                    ],
+                    'label' => 'Acciones'
+                ])     
         ;
     }
 
