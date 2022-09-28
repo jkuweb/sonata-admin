@@ -2,8 +2,7 @@
 
 namespace App\Admin;
 
-use App\Entity\Product;
-use App\Entity\Category;
+use App\Entity\Client;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -14,23 +13,15 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class ProductAdmin extends AbstractAdmin
+class ClientAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $form): void
     {
         $form
             ->with('Producto', ['class' => 'col-md-9'])
                 ->add('name', TextType::class)
-                ->add('description', TextareaType::class)
-                ->add('price', IntegerType::class)
+                ->add('firstname', TextType::class)
             ->end()    
-            ->with('Categorías', ['class' => 'col-md-3'])
-                ->add('category', ModelType::class, [
-                    'class' => Category::class,
-                    'property' => 'name'
-                ])
-            ->end()
-            
         ;
     }
 
@@ -44,19 +35,6 @@ class ProductAdmin extends AbstractAdmin
         /* https://docs.sonata-project.org/projects/SonataAdminBundle/en/4.x/reference/field_types/ */
         $list
             ->addIdentifier('name', null, ['label' => 'Nombre'])
-            ->add('createdAt', null, [
-                    'format' => 'd-m-Y H:i',
-                    'timezone' => 'Europe/Madrid',
-                    'label' => 'Fecha'
-                ])
-            ->add('category.name', null, [
-                'label' => 'Categoría',
-             ])
-            ->add('price', 'currency', [
-                    'currency' => 'EUR',
-                    'label' => 'Precio',
-                    'editable' => true
-                ])
             ->add(ListMapper::NAME_ACTIONS, null, [
                     'actions' => [
                         'show' => [],
@@ -72,16 +50,14 @@ class ProductAdmin extends AbstractAdmin
     {
         $show
             ->add('name')
-            ->add('description')
-            ->add('price')
-            ->add('createdAt')
+            ->add('firstName')
         ;    
     }
 
     public function toString($object): string
     {
-        return $object instanceof Product
+        return $object instanceof Client
             ? $object->getName()
-            : 'Producto';
+            : 'Cliente';
     }
 }

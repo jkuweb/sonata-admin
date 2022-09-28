@@ -18,13 +18,8 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Post::class)]
-    private Collection $Posts;
-
-    public function __construct()
-    {
-        $this->Posts = new ArrayCollection();
-    }
+    #[ORM\OneToOne(mappedBy: 'category', cascade: ['persist', 'remove'])]
+    private ?Product $product = null;
 
     public function getId(): ?int
     {
@@ -43,32 +38,19 @@ class Category
         return $this;
     }
 
-    /**
-     * @return Collection<int, Post>
-     */
-    public function getPosts(): Collection
+    public function getProduct(): ?Product
     {
-        return $this->Posts;
+        return $this->product;
     }
 
-    public function addPost(Post $post): self
+    public function setProduct(Product $product): self
     {
-        if (!$this->Posts->contains($post)) {
-            $this->Posts->add($post);
-            $post->setCategory($this);
+        // set the owning side of the relation if necessary
+        if ($product->getCategory() !== $this) {
+            $product->setCategory($this);
         }
 
-        return $this;
-    }
-
-    public function removePost(Post $post): self
-    {
-        if ($this->Posts->removeElement($post)) {
-            // set the owning side to null (unless already changed)
-            if ($post->getCategory() === $this) {
-                $post->setCategory(null);
-            }
-        }
+        $this->product = $product;
 
         return $this;
     }

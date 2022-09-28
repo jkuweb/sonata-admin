@@ -10,8 +10,8 @@ sonata_admin:
                 icon: '<i class="fa fa-database"></i>'
                 items:
                     - app.admin.product
-                    #- app.admin.post
-                    #- app.admin.category
+                    - app.admin.category
+                    - app.admin.client
 
 sonata_block:
     blocks:

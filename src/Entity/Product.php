@@ -28,6 +28,10 @@ class Product
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt;
 
+    #[ORM\OneToOne(inversedBy: 'product', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
     public function __construct() 
     {
        $this->createdAt = new DateTimeImmutable('now');     
@@ -82,6 +86,18 @@ class Product
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

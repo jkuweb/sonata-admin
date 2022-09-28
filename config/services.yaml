@@ -16,12 +16,12 @@ services:
         tags:
             - { name: sonata.admin, model_class: App\Entity\Category, manager_type: orm, label: Categorías }
 
-    app.admin.post:
-        class: App\Admin\PostAdmin
-        tags:
-            - { name: sonata.admin, model_class: App\Entity\Post, manager_type: orm, label: Post }
-
     app.admin.product:
         class: App\Admin\ProductAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Product, manager_type: orm, label: Producto }        
+
+    app.admin.client:
+        class: App\Admin\ClientAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Client, manager_type: orm, label: Cliente }        
