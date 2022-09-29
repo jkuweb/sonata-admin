@@ -25,3 +25,8 @@ services:
         class: App\Admin\ClientAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Client, manager_type: orm, label: Cliente }        
+
+    app.admin.address:
+        class: App\Admin\AddressAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Address, manager_type: orm, label: Cliente }        
