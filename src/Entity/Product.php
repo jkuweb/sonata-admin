@@ -32,6 +32,9 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Order $clientOrder = null;
+
     public function __construct() 
     {
        $this->createdAt = new DateTimeImmutable('now');     
@@ -98,6 +101,18 @@ class Product
     public function setCategory(Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getClientOrder(): ?Order
+    {
+        return $this->clientOrder;
+    }
+
+    public function setClientOrder(?Order $clientOrder): self
+    {
+        $this->clientOrder = $clientOrder;
 
         return $this;
     }
