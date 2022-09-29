@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use DateTime;
 use DateTimeImmutable;
+use App\Entity\ClientOrder;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -32,12 +35,14 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    private ?Order $clientOrder = null;
+    #[ORM\ManyToMany(targetEntity: ClientOrder::class, mappedBy: 'products')]
+    private Collection $clientOrders;
+
 
     public function __construct() 
     {
-       $this->createdAt = new DateTimeImmutable('now');     
+       $this->createdAt = new DateTimeImmutable('now');
+       $this->clientOrders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,15 +110,31 @@ class Product
         return $this;
     }
 
-    public function getClientOrder(): ?Order
+    /**
+     * @return Collection<int, ClientOrder>
+     */
+    public function getClientOrders(): Collection
     {
-        return $this->clientOrder;
+        return $this->clientOrders;
     }
 
-    public function setClientOrder(?Order $clientOrder): self
+    public function addClientOrder(ClientOrder $clientOrder): self
     {
-        $this->clientOrder = $clientOrder;
+        if (!$this->clientOrders->contains($clientOrder)) {
+            $this->clientOrders->add($clientOrder);
+            $clientOrder->addProduct($this);
+        }
 
         return $this;
     }
+
+    public function removeClientOrder(ClientOrder $clientOrder): self
+    {
+        if ($this->clientOrders->removeElement($clientOrder)) {
+            $clientOrder->removeProduct($this);
+        }
+
+        return $this;
+    }
+
 }

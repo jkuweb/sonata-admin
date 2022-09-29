@@ -8,16 +8,19 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
-#[ORM\Table(name: '`order`')]
-class Order
+#[ORM\Table(name: '`clientOrder`')]
+class ClientOrder
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'clientOrder', targetEntity: Product::class)]
+    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'clientOrders')]
     private Collection $products;
+
+    #[ORM\ManyToOne(inversedBy: 'orders')]
+    private ?Client $client = null;
 
     public function __construct()
     {
@@ -41,7 +44,6 @@ class Order
     {
         if (!$this->products->contains($product)) {
             $this->products->add($product);
-            $product->setClientOrder($this);
         }
 
         return $this;
@@ -49,13 +51,21 @@ class Order
 
     public function removeProduct(Product $product): self
     {
-        if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getClientOrder() === $this) {
-                $product->setClientOrder(null);
-            }
-        }
+        $this->products->removeElement($product);
 
         return $this;
     }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
 }

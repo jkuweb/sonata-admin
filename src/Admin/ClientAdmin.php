@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Entity\Client;
 use App\Entity\Address;
+use Sonata\Form\Type\CollectionType;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Admin\AbstractAdmin;

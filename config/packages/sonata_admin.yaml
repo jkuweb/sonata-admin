@@ -12,6 +12,7 @@ sonata_admin:
                     - app.admin.product
                     - app.admin.category
                     - app.admin.client
+                    - app.admin.order
 
 sonata_block:
     blocks:

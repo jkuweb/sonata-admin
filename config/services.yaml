@@ -29,4 +29,9 @@ services:
     app.admin.address:
         class: App\Admin\AddressAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Address, manager_type: orm, label: Cliente }        
+            - { name: sonata.admin, model_class: App\Entity\Address, manager_type: orm, label: Dirección }        
+    
+    app.admin.order:
+        class: App\Admin\OrderAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\ClientOrder, manager_type: orm, label: Pedidos }        
