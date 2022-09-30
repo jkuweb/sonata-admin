@@ -6,6 +6,7 @@ sonata_admin:
             - bundles/sonataadmin/custom.css
     global_search:
        empty_boxes: hide       
+       admin_route: edit
   
     dashboard:
         blocks:
