@@ -68,6 +68,12 @@ class ClientAdmin extends AbstractAdmin
                     ->add('address.country', EntityType::class, ['label' => 'Estado'])
                 ->end()    
             ->end()
+            ->tab('Pedidos')
+                ->add('orders', null, [
+                    'associated_property' => 'id',
+                    'label' => 'Lista de pedidos'
+                ])
+            ->end()
         ;    
     }
 

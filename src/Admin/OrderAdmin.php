@@ -42,7 +42,13 @@ final class OrderAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $list): void
     {
-        $list->addIdentifier('id')
+        $list
+            ->addIdentifier('id')
+            ->add('client.fullName',EntityType::class, ['label' => 'Cliente'])
+            ->add('products', EntityType::class, [
+                'associated_property' => 'name',
+                'label' => 'Lista de productos'
+            ])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -58,7 +64,7 @@ final class OrderAdmin extends AbstractAdmin
     {
         $show
             ->add('id')
-            ->add('client.fullName',null, ['label' => 'Cliente'])
+            ->add('client.fullName', EntityType::class, [ 'label' => 'Cliente' ])
             ->add('products', null, [
                 'associated_property' => 'name',
                 'label' => 'Lista de productos'

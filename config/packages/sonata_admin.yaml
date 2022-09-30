@@ -1,5 +1,11 @@
 sonata_admin:
-    title: 'Sonata Admin'
+    title: 'jkuweb'
+    title_logo: '/bundles/sonataadmin/images/logo.jpeg'
+    assets:
+        extra_stylesheets:
+            - bundles/sonataadmin/custom.css
+            
+  
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }

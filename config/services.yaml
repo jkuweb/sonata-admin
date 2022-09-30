@@ -23,6 +23,8 @@ services:
 
     app.admin.client:
         class: App\Admin\ClientAdmin
+        calls:
+            - [setTemplates, [['show', 'ClientAdmin/show.html.twig'], ['edit', 'ClientAdmin/edit.html.twig']]]
         tags:
             - { name: sonata.admin, model_class: App\Entity\Client, manager_type: orm, label: Cliente }        
 
