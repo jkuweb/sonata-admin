@@ -23,10 +23,10 @@ services:
 
     app.admin.client:
         class: App\Admin\ClientAdmin
-        calls:
-            - [setTemplates, [['show', 'ClientAdmin/show.html.twig'], ['edit', 'ClientAdmin/edit.html.twig']]]
+        #calls:
+            #- [setTemplates, [['show', 'ClientAdmin/show.html.twig'], ['edit', 'ClientAdmin/edit.html.twig']]]
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Client, manager_type: orm, label: Cliente }        
+            - { name: sonata.admin, model_class: App\Entity\Client, manager_type: orm, label: Cliente, controller: App\Controller\Admin\ClientAdminController }        
 
     app.admin.address:
         class: App\Admin\AddressAdmin

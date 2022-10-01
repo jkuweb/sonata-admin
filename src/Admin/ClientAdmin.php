@@ -13,18 +13,27 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 
 class ClientAdmin extends AbstractAdmin
 {
+    protected function configureRoutes(RouteCollectionInterface $collection): void 
+    {
+        $collection
+            ->add('send-email', $this->getRouterIdParameter(). '/send-email');
+    }
+
     protected function configureFormFields(FormMapper $form): void
     {
         $form
             ->with('Cliente', ['class' => 'col-md-9'])
                 ->add('name', TextType::class, ['label' => 'Nombre'])
                 ->add('firstname', TextType::class, ['label' => 'Apellido'])
+                ->add('email', TextType::class, ['label' => 'Email'])
                 ->add('address', ModelListType::class, ['label' => 'Dirección'])
             ->end()    
         ;
@@ -40,14 +49,19 @@ class ClientAdmin extends AbstractAdmin
         /* https://docs.sonata-project.org/projects/SonataAdminBundle/en/4.x/reference/field_types/ */
         $list
             ->addIdentifier('name', null, ['label' => 'Nombre'])
+            ->add('firstName', null, ['label' => 'Apellido'])
+            ->add('email', null, ['label' => 'Email'])
             ->add(ListMapper::NAME_ACTIONS, null, [
                     'actions' => [
                         'show' => [],
                         'edit' => [],
-                        'delete' => []
+                        'delete' => [],
+                        'email' => [
+                            'template' => 'admin/client/list__action_email.html.twig'
+                        ]
                     ],
                     'label' => 'Acciones'
-                ])
+            ])
            ; 
     }
 
@@ -58,6 +72,7 @@ class ClientAdmin extends AbstractAdmin
                 ->with('Cliente', ['class' => 'col-md-9'])
                     ->add('name')
                     ->add('firstName')
+                    ->add('email')
                 ->end()    
             ->end()
             ->tab('Direccion')    

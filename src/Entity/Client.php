@@ -27,6 +27,9 @@ class Client
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: ClientOrder::class)]
     private Collection $orders;
 
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -105,5 +108,17 @@ class Client
 
     public function getFullName() {
         return " " .$this->getName() . " " . $this->getFirstName();
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 }

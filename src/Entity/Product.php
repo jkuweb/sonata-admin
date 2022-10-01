@@ -137,4 +137,9 @@ class Product
         return $this;
     }
 
+    public function __clone() {
+        $this->id = null;
+    }
+    
+
 }
